@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Hi <%= content.name %></title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="/main.css" />
+        <script src="https://kit.fontawesome.com/59c256da52.js" crossorigin="anonymous"></script>
+    </head>
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap");
+
+        body {
+            background-color: #dedad7;
+        }
+
+        #loading {
+            background-image: url("https://www.wpfaster.org/wp-content/uploads/2013/06/loading-gif.gif");
+            background-repeat: no-repeat;
+            background-size: 30px;
+            background-position: center;
+        }
+    </style>
+
+    <body class="overflow-hidden w-screen h-screen text-black">
+        <div id="loading" class="text-center w-screen h-screen items-center flex flex-col justify-center">
+            <p id="loading-status" class="mt-28 text-xl">圖片加載中</p>
+            <p id="tip" class=""></p>
+        </div>
+        <div class="h-[2vh] flex items-center justify-center bg-gray-900 text-white">
+            <p class="tracking-widest"><%= content._id %></p>
+        </div>
+
+        <div class="flex mx-2 items-start gap-2 text">
+            <div class="flex justify-items-stretch flex-col pl-4 pt-2 h-[96vh]">
+                <div onclick='window.location.href="/dvtn"' class="flex items-center text-center justify-center my-3 rounded-xl p-3 w-fit bg-gradient-to-tl from-black/30 to-gray-300/40">
+                    <button class="fas fa-arrow-left-long text-3xl mr-1"></button>
+                    <p class="inline font-bold">返回重新生成影像</p>
+                </div>
+                <div id="description" class="text-ellipsis">
+                    <h1 class="font-extrabold text-3xl">Data Verse Tainan</h1>
+                    <hr class="border-black border-solid border-1 w-5/6 my-5" />
+                    <article class="">
+                        網路圖像、搜尋引擎、虛擬地景漸漸深入人們生活，看似破碎的地景擬像，將時間、空間結合模糊了對於現實地景的想像。<!--
+          -->四位創作者把自身放入街道，從台南火車站出發，隨機遊走在街頭巷弄之中，尋找屬於他們的「臺南印象」。透過數位運算拆解、拼湊，結合車流量、雨量、溫度等組構出&nbsp;Data-Verse<!--
+          -->&nbsp;Tainan，觀眾透過控制面板一同進入到點雲虛擬世界當中，參與世界的構成，並獲得屬於他獨有的生成影像。
+                    </article>
+                </div>
+                <hr class="border-black border-solid border-1 w-5/6 my-5" />
+                <div id="webdata" class="flex flex-col gap-1 text-lg overflow-auto">
+                    <h1 class="font-extrabold text">本次圖片生成使用資料如下</h1>
+                    <p class="">
+                        <a class="data-key">Your Name</a> ->
+                        <a class="data-value"> <%= content.name %> </a>
+                    </p>
+                    <p class="">
+                        <a class="data-key">Submit Date</a> ->
+                        <a class="data-value"> <%= content.submit_date %> </a>
+                    </p>
+                    <p class="">
+                        <a class="data-key">Your Birthday</a> ->
+                        <a class="data-value"> <%= content.birthday %> </a>
+                    </p>
+                    <p class="">
+                        <a class="data-key">Camera Info</a> ->
+                        <a class="data-value"> <%= content.slider_1 %>, <%= content.slider_2 %> </a>
+                    </p>
+                    <p class="">
+                        <a class="data-key">Traffic</a> ->
+                        <a class="data-value"> <%= content.webdata.traffic_1 %>, <%= content.webdata.traffic_2 %>, <%= content.webdata.traffic_3 %> </a>
+                    </p>
+                    <p class="">
+                        <a class="data-key">Temperature</a> ->
+                        <a class="data-value"> <%= content.webdata.temp - 273 %>°C </a>
+                    </p>
+                    <p class="">
+                        <a class="data-key">Is Raining</a> ->
+                        <a class="data-value"> <%= content.webdata.is_rain %> </a>
+                    </p>
+                </div>
+            </div>
+
+            <div class="grow"></div>
+
+            <img id="screenshot" />
+        </div>
+        <footer class="bg-black text-xl text-center text-white h-[2vh]">
+            <small>&copy; Copyright 2023, 2ENTER STUDIO. All Rights Reserved.</small>
+        </footer>
+
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const loading = parseInt(urlParams.get("loading")) || 0;
+            const tips_list = [
+                "你可以點擊左上角的返回按鈕重新生成影像",
+                "你知道嗎…這些粒子是由臺南街景演算出來的",
+                "臺南的車流量好像跟粒子動態有某種關聯性",
+                "跟隨著粒子移動…用新的方式感受台南",
+                "你參與過Data - Verse Taipei了嗎？",
+                "可以多玩幾次，會有不同的驚喜哦！",
+                "猜猜看這些粒子是什麼！",
+                "這個世界會下雨嗎？",
+                "作品似乎正跟隨台南的天氣變動著…",
+                "你對於臺南的印象是什麼呢？",
+                "你是參與者也是創作者之一哦！",
+                "你知道嗎…這些粒子最初的影像是由四位藝術家於臺南巷弄捕捉下來的",
+                "台南新藝獎於3/16-4/16展出於台南的10間畫廊",
+            ];
+            let rand_int = Math.floor(Math.random() * tips_list.length);
+            document.querySelector("#tip").innerHTML = `小知識${rand_int + 1}: ${tips_list[rand_int]}`;
+            var screenshot_dom = document.querySelector("#screenshot");
+            var loading_dom = document.querySelector("#loading");
+            if ("<%= content.screenshot %>".length <= 10000) {
+                setTimeout(() => {
+                    window.location.href = `?loading=${loading + 1}`;
+                }, 5000);
+            } else {
+                console.log("screenshot is ready");
+                loading_dom.style.display = "none";
+                screenshot_dom.src = "data:image/jpg;base64,<%= content.screenshot %>";
+                loaded = true;
+            }
+
+            if (loading >= 3) {
+                document.querySelector("#loading-status").innerHTML = "圖片持續加載中，請稍後，若圖片許久沒有載入，網頁將自動跳轉回上一頁";
+            }
+            if (loading > 5) {
+                window.location.href = "/dvtn?reloaded=1";
+            }
+
+            // setTimeout(() => {
+            //   document.querySelector('#loading-status').innerHTML = '圖片持續加載中，請稍後，若圖片許久沒有載入，網頁將自動跳轉回上一頁';
+            //   setTimeout(() => {
+            //     if (!loaded) window.location.href = '/dvtn?reloaded=1'
+            //   }, 15000)
+            // }, 15000)
+        </script>
+    </body>
+    <style>
+        #screenshot {
+            /* position: absolute; */
+            /* top: 0; */
+            /* right: 1vh; */
+            float: right;
+            margin-right: 0;
+            max-height: 94vh;
+            margin-top: 1vh;
+        }
+
+        .data-key {
+            color: hsl(0, 100%, 30%);
+        }
+
+        .data-value {
+            color: hsl(80, 100%, 20%);
+        }
+    </style>
+</html>

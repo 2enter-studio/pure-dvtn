@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link href="/main.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/59c256da52.js" crossorigin="anonymous"></script>
+</head>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300&display=swap');
+
+  @keyframes fadeinout {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 0.7;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+
+  #tip {
+    animation-name: fadeinout;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+  }
+</style>
+
+<body class="bg-gradient-to-tr from-black to-gray-900 h-screen top-0 text-xl overflow-hidden">
+  <div class="flex flex-col items-center text-center justify-center w-screen h-screen">
+    <h1 class="text-8xl font-extrabold w-5/6 tracking-tighter">DATA-VERSE TAINAN</h1>
+    <h2 id="tip" class="text-2xl font-extrabold tracking-tighter my-10 w-fit rounded-lg text-gray-300 p-2">
+      你可以調整以下參數，按下傳送，即可生成一張獨一無二的影像</h2>
+    <form action='/dvtn' method='post' class="flex flex-col items-center justify-center gap-8 w-3/5">
+      <div class="w-5/6 text-center">
+        <p>相機移動速度: <a id="slider_1_value">15</a></p>
+        <input type="range" name="slider_1" id="slider_1" min="1" max="30" value="15" required
+          class="range range-success mt-3 range-lg" />
+      </div>
+      <div class="w-5/6 text-center">
+        <p>相機焦距: <a id="slider_2_value">15</a></p>
+        <input type="range" name="slider_2" id="slider_2" min="1" max="30" value="15" required
+          class="range range-warning mt-3 range-lg" />
+      </div>
+
+      <div class="my-10">
+        <label for="name">姓名</label>
+        <input type="text" name="name" id="name" required
+          class="p-3 text-black bg-gradient-to-tl from-red-300 to-violet-300 rounded-xl h-10" />
+        <label for="birthday">生日</label>
+        <input type="date" name="birthday" id="birthday" required
+          class="p-3 text-black bg-gradient-to-br from-white to-purple-300 rounded-xl h-10" />
+      </div>
+      <button type="submit"
+        class="fa-solid fa-arrow-up bg-gradient-to-bl from-red-500 to-blue-900 text-black text-5xl rounded-full px-10 py-8">
+
+    </form>
+  </div>
+  <script src="/js/index.js"></script>
+</body>
+
+</html>
