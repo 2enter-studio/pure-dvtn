@@ -42,7 +42,7 @@ name_input.oninput = () => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: name_input.value
+            name: out_value
         })
     })
 }
