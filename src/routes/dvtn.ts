@@ -1,14 +1,12 @@
 import 'dotenv/config'
-
 import mongoose from 'mongoose'
+import WebSocket from 'ws';
+import express from 'express'
 import db_connection from '../db-connection.js'
 import DVTN_Model from '../schemas/DVTN.js'
 
 const collection_name = 'dvtn';
 const ObjectId = mongoose.Types.ObjectId;
-
-import WebSocket from 'ws';
-import express from 'express'
 const router = express.Router();
 
 let current_id: number = 0;
@@ -50,22 +48,6 @@ router.get('/', db_connection.db_connect, (req, res) => {
 router.get('/:id', db_connection.db_connect, (req, res) => {
     const target_id = new ObjectId(req.params.id);
     console.log(req.params.id)
-    // const data = {
-    //   "_id": "6410009df3075e7659f5fac1",
-    //   "name": "Rrr",
-    //   "birthday": new Date('1999-01-01'),
-    //   "slider_1": 15,
-    //   "slider_2": 16,
-    //   "webdata": {
-    //     "traffic_1": 20,
-    //     "traffic_2": 29,
-    //     "traffic_3": 20,
-    //     "is_rain": false,
-    //     "temp": 295
-    //   },
-    //   "submit_date": new Date('2021-05-18T07:00:00.000Z'),
-    //   "__v": 0
-    // }
     remote_db.collection(collection_name).findOne({ _id: target_id }).then(data => {
         res.render('result', { content: data });
     })
@@ -74,7 +56,7 @@ router.get('/:id', db_connection.db_connect, (req, res) => {
 router.post('/ue5-post', db_connection.db_connect, (req, res) => {
     const data = req.body;
     console.log('received ue5-post request!');
-    // console.log(JSON.stringify(req.body))
+
     const is_valid = () => {
         console.log(data);
         return data.type == 'ue5-response';

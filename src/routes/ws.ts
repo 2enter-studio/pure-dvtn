@@ -30,6 +30,7 @@ router.post('/dvtn/:type', (req, res) => {
             console.log('Client not ready')
         }
     });
+
     res.status(200).send(
         `
         POST request sent successfully!
