@@ -1,6 +1,6 @@
-const slider_ammount = 2;
+const slider_amount = 2;
 
-for (let i = 1; i <= slider_ammount; i++) {
+for (let i = 1; i <= slider_amount; i++) {
     const slider = document.getElementById(`slider_${i}`);
     slider.oninput = () => {
         fetch('/ws/dvtn/slider', {
