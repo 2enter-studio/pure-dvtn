@@ -16,6 +16,7 @@ import dvtn_router from './routes/dvtn.js';
 import ws_router from './routes/ws.js';
 import api_router from './routes/api.js'
 import screenshot_router from './routes/screenshot.js'
+import mail_router from './routes/sendmail.js'
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -29,6 +30,7 @@ app.use('/dvtn', dvtn_router);
 app.use('/ws', ws_router);
 app.use('/api', api_router);
 app.use('/screenshot', screenshot_router);
+app.use('/sendmail', mail_router);
 
 
 app.get('/', (req: Request, res: Response) => {
