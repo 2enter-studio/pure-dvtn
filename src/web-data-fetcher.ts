@@ -2,14 +2,14 @@ import "dotenv/config"
 import api_config from './api-config.js'
 const port = process.env.PORT || 3000;
 
-const delay_time = 10000
+const delay_time = process.env.WEB_DATA_FETCH_DELAY_TIME || 10000;
 
 const fetch_data = () => {
     let data_to_send = new Object();
     for (const [key, value] of Object.entries(api_config)) {
         fetch(`http://localhost:${port}/api/${key}`).then(res => {
             res.json().then(data => {
-                data_to_send[value.keyword] = data
+                data_to_send[value.keyword] = data;
             })
         });
     }
