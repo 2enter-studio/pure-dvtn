@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import express from 'express'
-import fs from 'fs'
 
 const router = express.Router();
 import api_routes from '../api-config.js';

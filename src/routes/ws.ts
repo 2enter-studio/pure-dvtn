@@ -6,7 +6,7 @@ import ws_server from '../ws-server.js';
 const router = express.Router();
 
 const valid_ws_types = {
-    tn: ['button', 'slider', 'webdata'],
+    tn: ['button', 'slider', 'webdata', 'name', 'birthday'],
 }
 
 router.post('/dvtn/:type', (req, res) => {
