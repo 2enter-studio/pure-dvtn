@@ -56,11 +56,7 @@ birthday_input.oninput = () => {
     const num_2 = parseInt(input_values[1]) * max_num / 12;
     const num_3 = parseInt(input_values[2]) * max_num / 31;
 
-    const out_value = {
-        P: num_1,
-        Y: num_2,
-        R: num_3,
-    };
+    const out_value = `P=${num_1.toFixed(2)} Y=${num_2.toFixed(2)} R=${num_3.toFixed(2)}`
     console.log(out_value)
 
     fetch('/ws/dvtn/birthday', {
