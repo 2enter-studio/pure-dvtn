@@ -6,7 +6,7 @@ import db_connection from './db-connection.js';
 const db_connect = db_connection.db_connect_no_args;
 const update_db_img = db_connection.update_db_img;
 
-const img_folder = process.env.TN_ROOT?.toString() || '/';
+const img_folder = process.env.SCREENSHOT_POSITION?.toString() || '/';
 const collection_name = 'dvtn';
 
 function get_img(img_file_path: string) {
