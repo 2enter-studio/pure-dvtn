@@ -1,3 +1,4 @@
+screenshot_imgs
 # Logs
 logs
 *.log
@@ -90,8 +91,6 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist/*
-!dist/public
-dist/public/main.css
 !dist/views
 
 # Gatsby files

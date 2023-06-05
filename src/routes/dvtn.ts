@@ -42,7 +42,7 @@ async function insert_data_to_db(data: any) {
 }
 
 router.get('/', db_connection.db_connect, (req, res) => {
-    res.render('index', { title: 'DVTN' });
+    res.render('index', { title: 'DVTN', local_url_base: `http://${process.env.LOCAL_IP_ADDR}:${process.env.PORT}` });
 });
 
 router.get('/:id', db_connection.db_connect, (req, res) => {

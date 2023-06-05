@@ -15,16 +15,18 @@
     <h1 class="text-8xl font-extrabold w-5/6 tracking-tighter">DATA-VERSE TAINAN</h1>
     <h2 id="tip" class="text-2xl font-extrabold tracking-tighter my-10 w-fit rounded-lg text-gray-300 p-2">
       你可以調整以下參數，按下傳送，即可生成一張獨一無二的影像</h2>
-    <form action='/dvtn' method='post' class="flex flex-col items-center justify-center gap-8 w-3/5">
+    <form action='<%= local_url_base %>/dvtn' method='post' class="flex flex-col items-center justify-center gap-8 w-3/5">
       <div class="w-5/6 text-center">
         <p>相機移動速度: 
-          <a id="slider_1_value">15</a>
+          <span id="slider_1_value">15</span>
         </p>
         <input type="range" name="slider_1" id="slider_1" min="1" max="30" value="15" required
           class="range range-success mt-3 range-lg" />
       </div>
       <div class="w-5/6 text-center">
-        <p>相機焦距: <a id="slider_2_value">15</a></p>
+        <p>相機焦距: 
+          <span id="slider_2_value">15</span>
+        </p>
         <input type="range" name="slider_2" id="slider_2" min="1" max="30" value="15" required
           class="range range-warning mt-3 range-lg" />
       </div>
@@ -42,7 +44,9 @@
         class="fa-solid fa-arrow-up bg-gradient-to-bl from-red-500 to-blue-900 text-black text-5xl rounded-full px-10 py-8">
 
     </form>
+
   </div>
+  <script>const local_url_base = "<%= local_url_base %>"</script>
   <script src="/js/index.js"></script>
 </body>
 

@@ -6,6 +6,8 @@ import { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import body_parser from 'body-parser'
 import { getGlobals } from 'common-es'
+import cors from "cors";
+
 
 // import things runs continuously
 import data_fetcher from './web-data-fetcher.js';
@@ -67,6 +69,8 @@ app.use((req, res) => {
         return res.status(200).json({});
     }
 });
+
+app.use(cors());
 
 // run: web data fetcher & image upload client
 data_fetcher.tn();
