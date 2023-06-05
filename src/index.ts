@@ -5,24 +5,34 @@ import express from 'express';
 import { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import body_parser from 'body-parser'
-
-const port = process.env.PORT || 3000;
-const app = express();
 import { getGlobals } from 'common-es'
-const { __dirname, __filename } = getGlobals(import.meta.url)
 
+// import things runs continuously
 import data_fetcher from './web-data-fetcher.js';
+import img_client from './img-upload-client.js'
+
+// import routes
 import dvtn_router from './routes/dvtn.js';
 import ws_router from './routes/ws.js';
 import api_router from './routes/api.js'
 import screenshot_router from './routes/screenshot.js'
 import mail_router from './routes/sendmail.js'
 
+// set port
+const port = process.env.PORT || 3000;
+const { __dirname, __filename } = getGlobals(import.meta.url)
+
+// initialize express
+const app = express();
+
+// set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// set body parser
 app.use(body_parser.json({ limit: '50mb' }));
 app.use(body_parser.urlencoded({ extended: false }));
 
+// set EJS as templating engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -33,8 +43,13 @@ app.use('/screenshot', screenshot_router);
 app.use('/sendmail', mail_router);
 
 
+// redirect to /dvtn
 app.get('/', (req: Request, res: Response) => {
     res.redirect('/dvtn');
+});
+
+app.listen(port, () => {
+    console.log(`Listening on http://localhost:${port}`);
 });
 
 // Fixing CORS Error
@@ -53,12 +68,11 @@ app.use((req, res) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Listening on http://localhost:${port}`);
-});
-
+// run: web data fetcher & image upload client
 data_fetcher.tn();
+img_client.watch_for_img_to_upload();
 
+// export app
 export default {
     app: app
 };

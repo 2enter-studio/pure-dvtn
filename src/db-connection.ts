@@ -1,7 +1,9 @@
 import 'dotenv/config'
 import { Request, Response, NextFunction } from 'express'
-const ENV = process.env;
 import mongoose from 'mongoose'
+import { ObjectId } from 'mongodb'
+
+const ENV = process.env;
 const db_config = {
     cluster_name: ENV.CLUSTER_NAME,
     user: ENV.DB_USERNAME,
@@ -13,6 +15,20 @@ const db_config = {
 const db_url = `mongodb://127.0.0.1:27017/dataverse-tainan`
 
 let remote_db = mongoose.connection;
+
+const db_connect_no_args = async () => {
+    try {
+        await mongoose.connect(db_url, {
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true,
+        });
+        console.log(`Connected to ${db_config.name} database`);
+        return mongoose.connection;
+    } catch (error) {
+        console.log(`Error Connecting to ${db_config.name} database`);
+        console.log(error);
+    }
+}
 
 const db_connect = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -34,7 +50,21 @@ async function get_db_data(collection_name: string) {
     return await dvtn_data.toArray();
 }
 
+async function update_db_img(db: mongoose.Connection, req_data: { _id: string, img_data: string }, collection_name: string) {
+    const target_collection = db.collection(collection_name);
+    const target_id = new ObjectId(req_data._id);
+
+    await target_collection.updateOne(
+        { _id: target_id }, { $set: { screenshot: req_data.img_data } }
+    );
+    console.log(`Image ${req_data._id} added to database`);
+}
+
+
+
 export default {
     db_connect: db_connect,
-    get_db_data: get_db_data
-}
+    db_connect_no_args: db_connect_no_args,
+    get_db_data: get_db_data,
+    update_db_img: update_db_img,
+};
